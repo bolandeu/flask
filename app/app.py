@@ -1,7 +1,6 @@
 import os
 
 from flask import Flask, render_template, request
-from flask_sqlalchemy import SQLAlchemy
 
 from config import DB_NAME
 
@@ -9,22 +8,6 @@ from config import DB_NAME
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__)
-
-
-app.config['SQLALCHEMY_DATABASE_URI'] =\
-    'sqlite:///' + os.path.join(basedir, 'database.db')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-db = SQLAlchemy(app)
-
-
-class Location(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(500))
-    parent_id = db.Column(db.Integer)
-
-    def __repr__(self):
-        return f"<Location {self.id}>"
 
 
 @app.route("/")
